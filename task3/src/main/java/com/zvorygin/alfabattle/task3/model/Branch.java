@@ -6,6 +6,7 @@ public class Branch {
     private long lat;
     private long lon;
     private String address;
+    private Long distance;
 
     public long getId() {
         return id;
@@ -45,5 +46,13 @@ public class Branch {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Long getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Long distance) {
+        this.distance = distance;
     }
 }
