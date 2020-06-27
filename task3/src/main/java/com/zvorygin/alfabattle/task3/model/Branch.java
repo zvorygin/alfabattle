@@ -1,5 +1,8 @@
 package com.zvorygin.alfabattle.task3.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Branch {
     private long id;
     private String title;
@@ -8,6 +11,8 @@ public class Branch {
     private String address;
     private Long distance;
     private Long predicting;
+    private Integer dayOfWeek;
+    private Integer hourOfDay;
 
     private static double sqr(double d) {
         return d * d;
@@ -67,6 +72,22 @@ public class Branch {
 
     public void setPredicting(Long predicting) {
         this.predicting = predicting;
+    }
+
+    public Integer getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(Integer dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+
+    public Integer getHourOfDay() {
+        return hourOfDay;
+    }
+
+    public void setHourOfDay(Integer hourOfDay) {
+        this.hourOfDay = hourOfDay;
     }
 
     public double getDistanceTo(double lat, double lon) {

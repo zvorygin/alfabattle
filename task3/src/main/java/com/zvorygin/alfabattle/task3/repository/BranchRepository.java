@@ -25,7 +25,7 @@ public class BranchRepository {
             "select extract('epoch' from end_time_of_wait - start_time_of_wait) as wait_time from queue_log "
             + "where branches_id = ? "
                     + "and date_part('isodow', data) = ? "
-                    + "and date_part('hour', end_time_of_service) = ?";
+                    + "and date_part('hour', end_time_of_wait) = ?";
 
     private final BeanPropertyRowMapper<Branch> rowMapper = new BeanPropertyRowMapper<>(Branch.class, false);
 

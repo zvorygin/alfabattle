@@ -33,11 +33,13 @@ public class BranchController {
     }
 
     @GetMapping("/branches/{id}/predict")
-    public Branch getBranch(@PathVariable("id") long id,
-            @RequestParam("dayOfWeek") int dayOfWeek,
-            @RequestParam("hourOfDay") int hourOfDay) {
+    public Branch getPrediction(@PathVariable("id") long id,
+            @RequestParam(name = "dayOfWeek", required = true) int dayOfWeek,
+            @RequestParam(name = "hourOfDay", required = true) int hourOfDay) {
         Branch branch = branchRepository.get(id);
 
+        branch.setDayOfWeek(dayOfWeek);
+        branch.setHourOfDay(hourOfDay);
         branch.setPredicting(branchRepository.getServiceTime(branch, dayOfWeek, hourOfDay));
 
         return branch;
