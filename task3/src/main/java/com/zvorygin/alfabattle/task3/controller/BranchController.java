@@ -32,6 +32,17 @@ public class BranchController {
         return branchRepository.get(id);
     }
 
+    @GetMapping("/branches/{id}/predict")
+    public Branch getBranch(@PathVariable("id") long id,
+            @RequestParam("dayOfWeek") int dayOfWeek,
+            @RequestParam("hourOfDay") int hourOfDay) {
+        Branch branch = branchRepository.get(id);
+
+        branch.setPredicting(branchRepository.getServiceTime(branch, dayOfWeek, hourOfDay));
+
+        return branch;
+    }
+
     @GetMapping("/branches")
     public Branch getClosestBranch(@RequestParam("lat") double lat, @RequestParam("lon") double lon) {
         return branchRepository.getClosestBranch(lat, lon);

@@ -7,6 +7,11 @@ public class Branch {
     private double lon;
     private String address;
     private Long distance;
+    private Long predicting;
+
+    private static double sqr(double d) {
+        return d * d;
+    }
 
     public long getId() {
         return id;
@@ -56,6 +61,14 @@ public class Branch {
         this.distance = distance;
     }
 
+    public Long getPredicting() {
+        return predicting;
+    }
+
+    public void setPredicting(Long predicting) {
+        this.predicting = predicting;
+    }
+
     public double getDistanceTo(double lat, double lon) {
         double deltaLat = lat - this.lat;
         double deltaLon = lon - this.lon;
@@ -64,16 +77,5 @@ public class Branch {
                 Math.sqrt(sqr(Math.sin(Math.toRadians(deltaLat / 2)))
                         + Math.cos(Math.toRadians(lat)) * Math.cos(Math.toRadians(this.lat))
                         * sqr(Math.sin(Math.toRadians(deltaLon / 2)))));
-    }
-
-    private static double sqr(double d) {
-        return d*d;
-    }
-
-    @Override
-    public String toString() {
-        return "Branch{" +
-                "address='" + address + '\'' +
-                '}';
     }
 }
