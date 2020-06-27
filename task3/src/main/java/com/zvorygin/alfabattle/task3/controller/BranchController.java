@@ -32,7 +32,7 @@ public class BranchController {
         return branchRepository.get(id);
     }
 
-    @GetMapping("/branches/")
+    @GetMapping("/branches")
     public Branch getClosestBranch(@RequestParam("lat") double lat, @RequestParam("lon") double lon) {
         return branchRepository.getClosestBranch(lat, lon);
     }

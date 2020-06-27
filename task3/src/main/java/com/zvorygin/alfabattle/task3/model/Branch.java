@@ -3,8 +3,8 @@ package com.zvorygin.alfabattle.task3.model;
 public class Branch {
     private long id;
     private String title;
-    private long lat;
-    private long lon;
+    private double lat;
+    private double lon;
     private String address;
     private Long distance;
 
@@ -24,19 +24,19 @@ public class Branch {
         this.title = title;
     }
 
-    public long getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public void setLat(long lat) {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 
-    public long getLon() {
+    public double getLon() {
         return lon;
     }
 
-    public void setLon(long lon) {
+    public void setLon(double lon) {
         this.lon = lon;
     }
 
