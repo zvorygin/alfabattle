@@ -57,10 +57,23 @@ public class Branch {
     }
 
     public double getDistanceTo(double lat, double lon) {
-        double theta = lon - this.lon;
-        double dist = Math.sin(Math.toRadians(lat)) * Math.sin(Math.toRadians(this.lat)) + Math.cos(Math.toRadians(lat)) * Math.cos(Math.toRadians(this.lat)) * Math.cos(Math.toRadians(theta));
-        dist = Math.acos(dist);
-        dist = dist * 6371 * 1000;
-        return dist;
+        double deltaLat = lat - this.lat;
+        double deltaLon = lon - this.lon;
+
+        return 2.0 * 6371 * 1000 * Math.asin(
+                Math.sqrt(sqr(Math.sin(Math.toRadians(deltaLat / 2)))
+                        + Math.cos(Math.toRadians(lat)) * Math.cos(Math.toRadians(this.lat))
+                        * sqr(Math.sin(Math.toRadians(deltaLon / 2)))));
+    }
+
+    private static double sqr(double d) {
+        return d*d;
+    }
+
+    @Override
+    public String toString() {
+        return "Branch{" +
+                "address='" + address + '\'' +
+                '}';
     }
 }

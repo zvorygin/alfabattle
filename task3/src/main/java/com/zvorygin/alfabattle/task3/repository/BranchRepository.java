@@ -45,6 +45,7 @@ public class BranchRepository {
             double newDistance = newBranch.getDistanceTo(lat, lon);
             if (newDistance < bestDistance) {
                 bestBranch = newBranch;
+                bestDistance = newDistance;
                 bestBranch.setDistance(Math.round(newDistance));
             }
         }
