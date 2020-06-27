@@ -55,4 +55,12 @@ public class Branch {
     public void setDistance(Long distance) {
         this.distance = distance;
     }
+
+    public double getDistanceTo(double lat, double lon) {
+        double theta = lon - this.lon;
+        double dist = Math.sin(Math.toRadians(lat)) * Math.sin(Math.toRadians(this.lat)) + Math.cos(Math.toRadians(lat)) * Math.cos(Math.toRadians(this.lat)) * Math.cos(Math.toRadians(theta));
+        dist = Math.acos(dist);
+        dist = dist * 6371 * 1000;
+        return dist;
+    }
 }

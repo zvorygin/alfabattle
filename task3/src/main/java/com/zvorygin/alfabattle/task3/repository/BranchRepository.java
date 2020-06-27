@@ -9,19 +9,14 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Repository
 public class BranchRepository {
 
     private static final String BRANCH_QUERY = "SELECT id, title, lat, lon, address from branches where id = ?";
 
-    /**
-     * Relies on
-     *
-     * CREATE EXTENSION cube;
-     * CREATE EXTENSION earthdistance;
-     */
-    private static final String CLOSEST_BRANCH_QUERY = "SELECT id, title, lat, lon, address, earth_distance(ll_to_earth(?, ?), ll_to_earth(lat, lon)) as distance from branches order by distance limit 1";
+    private static final String CLOSEST_BRANCH_QUERY = "SELECT id, title, lat, lon, address from branches";
 
     private final BeanPropertyRowMapper<Branch> rowMapper = new BeanPropertyRowMapper<>(Branch.class, false);
 
@@ -37,7 +32,23 @@ public class BranchRepository {
     }
 
     public Branch getClosestBranch(double lat, double lon) {
-        return jdbcTemplate.query(CLOSEST_BRANCH_QUERY, this::fetchBranch, lat, lon);
+        return jdbcTemplate.query(CLOSEST_BRANCH_QUERY, resultSet -> {
+            return fetchClosestBranch(resultSet, lat, lon);
+        });
+    }
+
+    private Branch fetchClosestBranch(ResultSet resultSet, double lat, double lon) throws SQLException {
+        double bestDistance = Double.POSITIVE_INFINITY;
+        Branch bestBranch = null;
+        while (resultSet.next()) {
+            Branch newBranch = Objects.requireNonNull(rowMapper.mapRow(resultSet, 1));
+            double newDistance = newBranch.getDistanceTo(lat, lon);
+            if (newDistance < bestDistance) {
+                bestBranch = newBranch;
+                bestBranch.setDistance(Math.round(newDistance));
+            }
+        }
+        return bestBranch;
     }
 
     private Branch fetchBranch(ResultSet resultSet) throws SQLException {
